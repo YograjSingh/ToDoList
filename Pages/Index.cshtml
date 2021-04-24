@@ -1,0 +1,58 @@
+﻿@page
+@model IndexModel
+@{
+
+}
+<style>
+    .column {
+        float: left;
+        width: 50%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+
+<div class="row">
+    
+        @foreach (var item in Model.ToDoModel)
+        {
+            @if (item.Done)
+            {
+
+                <span class="column"  title="Completed">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </span>
+            }
+        }
+
+
+    @foreach(var item in Model.ToDoModel)
+
+        @if (!item.Done)
+        {
+            <span class="column" title="Due">
+                @Html.DisplayFor(modelItem => item.Title)
+            </span>
+        }
+        
+    </div>
+   
+
+    <script>
+
+        const complete [];
+        for (let i = 0; i <= Model.ToDoModel.length; i++) {
+            if (item.Done) {
+                complete[i] = Model.ToDoModel.title;
+                alert(Model.ToDoModel.title);
+            }
+
+
+        }
+    </script>

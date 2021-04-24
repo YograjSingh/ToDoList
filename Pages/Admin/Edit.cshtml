@@ -1,0 +1,85 @@
+﻿@page
+@model ToDoList.Pages.Admin.EditModel
+
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<h4 style="text-align:center">Are you sure to complete the task?</h4>
+
+<h4 asp-for="ToDoModel.Title"></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ToDoModel.Email" hidden class="control-label"></label>
+                <input asp-for="ToDoModel.Email" hidden class="form-control" />
+                <span asp-validation-for="ToDoModel.Email" hidden class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="ToDoModel.Title" class="control-label"></label>
+                <input asp-for="ToDoModel.Title"   class="form-control" />
+                <span asp-validation-for="ToDoModel.Title" class="text-danger"></span>
+            </div>*@
+            <input hidden asp-for="ToDoModel.Title" />
+            @*<div class="form-group">
+                <label asp-for="ToDoModel.Description" class="control-label"></label>
+                <input asp-for="ToDoModel.Description" class="form-control" />
+                <span asp-validation-for="ToDoModel.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoModel.Added_date" class="control-label"></label>
+                <input asp-for="ToDoModel.Added_date" class="form-control" />
+                <span asp-validation-for="ToDoModel.Added_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoModel.Due_date" class="control-label"></label>
+                <input asp-for="ToDoModel.Due_date" class="form-control" />
+                <span asp-validation-for="ToDoModel.Due_date" class="text-danger"></span>
+            </div>*@
+            <div class="form-group form-check">
+                <label class="form-check-label" hidden>
+                    <input class="form-check-input" checked hidden asp-for="ToDoModel.Done" /> @Html.DisplayNameFor(model => model.ToDoModel.Done)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoModel.Done_date" class="control-label">Please Select date of completion</label>
+                <input asp-for="ToDoModel.Done_date" class="form-control" type="datetime-local" />
+                <span  asp-validation-for="ToDoModel.Done_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input style="text-align:center" id="online" type="submit" value="Yes" class="btn btn-primary"  />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+<script type="text/javascript">
+
+
+
+    const online = document.getElementById("online");
+    const offline = document.getElementById("offline");
+    if (navigator.onLine) {
+        online.style.display;
+        offline.style.display = "none";
+    }
+    window.addEventListener("online", function () {
+        online.style.display;
+        offline.style.hidden = "none";
+    })
+    window.addEventListener("offline", function () {
+        online.style.display = "none";
+        offline.style.display;
+    })
+    </script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

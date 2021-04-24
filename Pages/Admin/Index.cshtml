@@ -1,0 +1,112 @@
+﻿@page
+@model ToDoList.Pages.Admin.IndexModel
+
+@{
+    ViewData["Title"] = "All Tasks";
+
+}
+<script type="text/javascript">
+    function Copy(event) {
+        
+
+        navigator.permissions.query({ name: "clipboard-write", allowWithoutGesture: false }).then(result => {
+           
+            if (confirm("Copy Title?")) {
+                if (result.state == "granted" || result.state == "prompt") {
+                    navigator.clipboard.writeText(event);
+                }
+            }
+        });
+    }
+
+
+
+    var online = document.getElementById("online");
+    var offline = document.getElementById("offline");
+    if (navigator.onLine) {
+        online.style.display;
+        offline.style.display = 'none';
+    }
+    window.addEventListener('online', function (e){
+        online.style.display;
+        offline.style.display = "none";
+    })
+    window.addEventListener('offline', function (e) {
+        online.style.display = 'none';
+        offline.style.display;
+    })
+
+
+</script>
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" id="online">Create New Task</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Added_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Due_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Done)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoModel[0].Done_date)
+            </th>
+            <th> Complete </th>
+            <th> Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ToDoModel) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Added_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Due_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Done)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Done_date)
+            </td>
+            <td>
+                @if (!item.Done)
+                {
+
+                    
+                    <a class="btn btn-outline-info"  asp-page="./Edit" asp-route-id="@item.Title">Complete</a>
+
+                }
+                <a class="btn btn-outline-info" onclick="Copy('@item.Title')" value="TitleCopy">Copy</a>
+            </td>
+            <td>
+             
+                <a asp-page="./Details" asp-route-id="@item.Title">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Title">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
